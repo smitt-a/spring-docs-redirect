@@ -11,10 +11,11 @@
 (function () {
   'use strict';
   let url = new URL(location.href);
-  const pathArr = url.pathname.split('/');
-  if (pathArr[3] != 'current') {
-    pathArr[3] = 'current';
-    url.pathname = pathArr.join('/');
+
+  const regex = RegExp(/\/\d{1,3}\.\d{1,3}\.(\d{1,3}|x)(\.*\w*\/)/);
+  if (regex.test(url.pathname)) {
+    url.pathname = url.pathname.replace(regex, '/current/');
+    console.log(url);
     window.location.replace(url);
   }
 })();
